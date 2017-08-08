@@ -1,0 +1,97 @@
+<div class="container">
+      <button type = "button" class = "btn btn-primary btn-block" data-toggle = "modal" 
+      data-target ="#formModal">
+        Add task
+      </button>
+      <br />
+      {{#each tasks as |task|}}
+        <div class="well">
+          <h3>
+          <!-- HTML5 currently only supports post/get for forms so can't use delete as method-->
+          <form method = "post" action = "/delete/{{task.id}}">
+            <button class = "btn btn-danger pull-left" type = "submit">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+          </form>
+            &nbsp
+            {{task.title}}
+            <button class = "btn btn-primary pull-right" data-toggle="collapse" data-target="#task_{{task.id}}" aria-expanded="false" aria-controls="task_{{task.id}}" type = "button">
+              <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+            </button>
+            <button type = "button" class = "btn btn-info pull-right editTask" data-toggle = "modal" 
+            data-id = "{{task.id}}"
+            data-title = "{{task.title}}"
+            data-description = "{{task.description}}"
+            data-target ="#editModal">
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class = "collapse" id = "task_{{task.id}}" >
+            <p>
+              <strong>Description</strong>
+              <br />
+              {{task.description}}
+            </p>
+          </div>
+        </div>
+      {{/each}}
+
+<!-- Add new task MODAL -->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method = "post" action = "/add">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add new task</h4>
+        </div>
+        <div class="modal-body">
+            <div class = "form-group">
+              <label>Title</label>
+              <input type = "text" class = "form-control" name = "title"/>
+            </div>
+            <div class = "form-group">
+              <label>Description</label>
+              <textarea type = "text" class = "form-control" name = "description"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type = "submit" class = "btn btn-primary" value = "Save"/>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+<!-- Edit task MODAL -->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method = "post" action = "/edit">
+        <input type = "hidden" id = "editTaskId" name = "id">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Edit</h4>
+        </div>
+        <div class="modal-body">
+            <div class = "form-group">
+              <label>Title</label>
+              <input type = "text" class = "form-control" name = "title" id = "editTaskTitle"/>
+            </div>
+            <div class = "form-group">
+              <label>Description</label>
+              <textarea type = "text" class = "form-control" name = "description" id = "editTaskDescription"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type = "submit" class = "btn btn-primary" value = "Save"/>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+</div> 
+
